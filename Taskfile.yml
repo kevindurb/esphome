@@ -8,6 +8,15 @@ tasks:
   default: task --list-all
   compile:all:
     deps:
+      - compile:basement-string-lights
+      - compile:garage-relay
       - compile:livingroom-lamp
+      - compile:master-bedroom-switches
+      - compile:washing-machine-outlet
 
-  compile:livingroom-lamp: esphome compile ./livingroom-lamp.yml
+  compile:*:
+    vars:
+      DEVICE: '{{index .MATCH 0}}'
+    sources: [./secrets.yaml, './{{.DEVICE}}.yml']
+    generates: ['./.esphome/build/{{.DEVICE}}/']
+    cmd: esphome compile ./{{.DEVICE}}.yml
