@@ -14,10 +14,9 @@ vars:
 
 tasks:
   default:
-    cmds:
-      - task: compile:all
-      - task: compress:all
-      - task: dist:all
+    deps:
+      - for: { var: DEVICES }
+        task: build:{{.ITEM}}
 
   compile:all:
     deps:
@@ -33,6 +32,14 @@ tasks:
     deps:
       - for: { var: DEVICES }
         task: dist:{{.ITEM}}
+
+  build:*:
+    vars:
+      DEVICE: '{{index .MATCH 0}}'
+    cmds:
+      - task: compile:{{.DEVICE}}
+      - task: compress:{{.DEVICE}}
+      - task: dist:{{.DEVICE}}
 
   compile:*:
     vars:
