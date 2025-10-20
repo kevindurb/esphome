@@ -4,15 +4,35 @@ version: '3'
 
 dotenv: [.env]
 
+vars:
+  DEVICES:
+    - basement-string-lights
+    - garage-relay
+    - livingroom-lamp
+    - master-bedroom-switches
+    - washing-machine-outlet
+
 tasks:
-  default: task --list-all
+  default:
+    cmds:
+      - task: compile:all
+      - task: compress:all
+      - task: dist:all
+
   compile:all:
     deps:
-      - compile:basement-string-lights
-      - compile:garage-relay
-      - compile:livingroom-lamp
-      - compile:master-bedroom-switches
-      - compile:washing-machine-outlet
+      - for: { var: DEVICES }
+        task: compile:{{.ITEM}}
+
+  compress:all:
+    deps:
+      - for: { var: DEVICES }
+        task: compress:{{.ITEM}}
+
+  dist:all:
+    deps:
+      - for: { var: DEVICES }
+        task: dist:{{.ITEM}}
 
   compile:*:
     vars:
@@ -20,3 +40,17 @@ tasks:
     sources: [./secrets.yaml, './{{.DEVICE}}.yml']
     generates: ['./.esphome/build/{{.DEVICE}}/']
     cmd: esphome compile ./{{.DEVICE}}.yml
+
+  compress:*:
+    vars:
+      DEVICE: '{{index .MATCH 0}}'
+      FIRMWARE_BIN: '.esphome/build/{{.DEVICE}}/.pioenvs/{{.DEVICE}}/firmware.bin'
+    sources: ['{{.FIRMWARE_BIN}}']
+    cmd: gzip -fk {{.FIRMWARE_BIN}}
+
+  dist:*:
+    vars:
+      DEVICE: '{{index .MATCH 0}}'
+      FIRMWARE_BIN: '.esphome/build/{{.DEVICE}}/.pioenvs/{{.DEVICE}}/firmware.bin.gz'
+    cmds:
+      - cp {{.FIRMWARE_BIN}} ./dist/{{.DEVICE}}.bin.gz

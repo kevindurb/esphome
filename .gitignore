@@ -4,3 +4,5 @@
 /.esphome/
 /secrets.yaml
 /.task/
+dist/*
+!dist/.gitkeep
