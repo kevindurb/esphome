@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: '3'
+
+dotenv: [.env]
+
+tasks:
+  default: task --list-all
+  compile:all:
+    deps:
+      - compile:livingroom-lamp
+
+  compile:livingroom-lamp: esphome compile ./livingroom-lamp.yml
