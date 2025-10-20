@@ -24,19 +24,22 @@ output:
     pin: GPIO4
     id: shelly_1_relay
 
-light:
-  - platform: binary
-    name: 'Shelly 1 Light'
+switch:
+  - platform: output
+    name: 'Garage Relay'
     output: shelly_1_relay
-    id: lightid
+    id: garage_switch
+    on_turn_on:
+      - delay: 5s
+      - switch.turn_off: garage_switch
 
 binary_sensor:
   - platform: gpio
     pin:
       number: GPIO5
-    name: 'Switch Shelly 1'
+    name: 'Shelly 1 Button'
     on_state:
       then:
-        - light.toggle: lightid
+        - switch.toggle: garage_switch
     internal: true
     id: switchid
