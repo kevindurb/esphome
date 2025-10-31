@@ -88,13 +88,13 @@ light:
   - platform: binary
     name: '${devicename} Light'
     output: shelly_25_relay_1
-    id: light
+    id: light1
 
 fan:
   - platform: binary
     name: '${devicename} Fan'
     output: shelly_25_relay_2
-    id: fan
+    id: fan1
 
 binary_sensor:
   - platform: gpio
@@ -103,7 +103,7 @@ binary_sensor:
     name: '${devicename} Light Switch'
     on_state:
       then:
-        - light.toggle: light
+        - light.toggle: light1
     internal: true
     id: switchid1
   - platform: gpio
@@ -112,6 +112,6 @@ binary_sensor:
     name: '${devicename} Fan Switch'
     on_state:
       then:
-        - fan.toggle: fan
+        - fan.toggle: fan1
     internal: true
     id: switchid2
