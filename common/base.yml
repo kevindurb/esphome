@@ -1,0 +1,12 @@
+---
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  area: ${area}
+api:
+ota:
+  platform: esphome
+logger:
+  baud_rate: 0
+  logs:
+    sensor: DEBUG

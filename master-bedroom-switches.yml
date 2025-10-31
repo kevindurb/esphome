@@ -1,31 +1,14 @@
 ---
 substitutions:
-  devicename: master-bedroom-switches
+  name: master-bedroom-switches
+  friendly_name: Master Bedroom Switches
+  area: Master Bedroom
+  static_ip: 192.168.137.2
 
-esphome:
-  name: ${devicename}
-
-esp8266:
-  board: esp01_1m
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  manual_ip:
-    static_ip: 192.168.137.2
-    gateway: 192.168.1.1
-    subnet: 255.255.0.0
-    dns1: 192.168.1.1
-
-api:
-
-ota:
-  platform: esphome
-
-logger:
-  baud_rate: 0
-  logs:
-    sensor: DEBUG
+packages:
+  - !include common/base.yml
+  - !include common/wifi.yml
+  - !include common/shelly.yml
 
 i2c:
   sda: GPIO12
@@ -35,17 +18,17 @@ sensor:
   - platform: ade7953_i2c
     irq_pin: GPIO16 # Prevent overheating by setting this
     voltage:
-      name: ${devicename} Voltage
+      name: ${friendly_name} Voltage
     # On the Shelly 2.5 channels are mixed ch1=B ch2=A
     current_a:
-      name: ${devicename} Current B
+      name: ${friendly_name} Current B
     current_b:
-      name: ${devicename} Current A
+      name: ${friendly_name} Current A
     active_power_a:
-      name: ${devicename} Active Power B
+      name: ${friendly_name} Active Power B
       # active_power_a is normal, so don't multiply by -1
     active_power_b:
-      name: ${devicename} Active Power A
+      name: ${friendly_name} Active Power A
       # active_power_b is inverted, so take the absolute value
       filters:
         - lambda: return abs(x);
@@ -54,7 +37,7 @@ sensor:
   # NTC Temperature
   - platform: ntc
     sensor: temp_resistance_reading
-    name: ${devicename} Temperature
+    name: ${friendly_name} Temperature
     unit_of_measurement: '°C'
     accuracy_decimals: 1
     icon: 'mdi:thermometer'
@@ -79,39 +62,39 @@ status_led:
 output:
   - platform: gpio
     pin: GPIO4
-    id: shelly_25_relay_1
+    id: relay_1
   - platform: gpio
     pin: GPIO15
-    id: shelly_25_relay_2
+    id: relay_2
 
 light:
   - platform: binary
-    name: '${devicename} Light'
-    output: shelly_25_relay_1
-    id: light1
+    name: '${friendly_name} Light'
+    output: relay_1
+    id: light_1
 
 fan:
   - platform: binary
-    name: '${devicename} Fan'
-    output: shelly_25_relay_2
-    id: fan1
+    name: '${friendly_name} Fan'
+    output: relay_2
+    id: fan_1
 
 binary_sensor:
   - platform: gpio
     pin:
       number: GPIO13
-    name: '${devicename} Light Switch'
+    name: '${friendly_name} Light Switch'
     on_state:
       then:
-        - light.toggle: light1
+        - light.toggle: light_1
     internal: true
-    id: switchid1
+    id: switch_1
   - platform: gpio
     pin:
       number: GPIO5
-    name: '${devicename} Fan Switch'
+    name: '${friendly_name} Fan Switch'
     on_state:
       then:
-        - fan.toggle: fan1
+        - fan.toggle: fan_1
     internal: true
-    id: switchid2
+    id: switch_2

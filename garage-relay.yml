@@ -1,28 +1,14 @@
 ---
-esphome:
+substitutions:
   name: garage-relay
+  friendly_name: Garage Relay
+  area: Garage
+  static_ip: 192.168.137.1
 
-esp8266:
-  board: esp01_1m
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  manual_ip:
-    static_ip: 192.168.137.1
-    gateway: 192.168.1.1
-    subnet: 255.255.0.0
-    dns1: 192.168.1.1
-
-api:
-
-ota:
-  platform: esphome
-
-logger:
-  baud_rate: 0
-  logs:
-    sensor: DEBUG
+packages:
+  - !include common/base.yml
+  - !include common/wifi.yml
+  - !include common/shelly.yml
 
 output:
   - platform: gpio
@@ -33,18 +19,7 @@ switch:
   - platform: output
     name: 'Garage Relay'
     output: shelly_1_relay
-    id: garage_switch
+    id: garage_relay
     on_turn_on:
-      - delay: 5s
-      - switch.turn_off: garage_switch
-
-binary_sensor:
-  - platform: gpio
-    pin:
-      number: GPIO5
-    name: 'Shelly 1 Button'
-    on_state:
-      then:
-        - switch.toggle: garage_switch
-    internal: true
-    id: switchid
+      - delay: 1s
+      - switch.turn_off: garage_relay
