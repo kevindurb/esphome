@@ -1,14 +1,21 @@
 ---
+substitutions:
+  devicename: master-bedroom-switches
+
 esphome:
-  name: master-bedroom-switches
+  name: ${devicename}
 
 esp8266:
-  board: esp12e
-  early_pin_init: false
+  board: esp01_1m
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.137.2
+    gateway: 192.168.1.1
+    subnet: 255.255.0.0
+    dns1: 192.168.1.1
 
 api:
 
@@ -20,76 +27,91 @@ logger:
   logs:
     sensor: DEBUG
 
-uart:
-  rx_pin: RX
-  baud_rate: 4800
-  parity: EVEN
+i2c:
+  sda: GPIO12
+  scl: GPIO14
+
+sensor:
+  - platform: ade7953_i2c
+    irq_pin: GPIO16 # Prevent overheating by setting this
+    voltage:
+      name: ${devicename} Voltage
+    # On the Shelly 2.5 channels are mixed ch1=B ch2=A
+    current_a:
+      name: ${devicename} Current B
+    current_b:
+      name: ${devicename} Current A
+    active_power_a:
+      name: ${devicename} Active Power B
+      # active_power_a is normal, so don't multiply by -1
+    active_power_b:
+      name: ${devicename} Active Power A
+      # active_power_b is inverted, so take the absolute value
+      filters:
+        - lambda: return abs(x);
+    update_interval: 60s
+
+  # NTC Temperature
+  - platform: ntc
+    sensor: temp_resistance_reading
+    name: ${devicename} Temperature
+    unit_of_measurement: '°C'
+    accuracy_decimals: 1
+    icon: 'mdi:thermometer'
+    calibration:
+      b_constant: 3350
+      reference_resistance: 10kOhm
+      reference_temperature: 298.15K
+  - platform: resistance
+    id: temp_resistance_reading
+    sensor: temp_analog_reading
+    configuration: DOWNSTREAM
+    resistor: 32kOhm
+  - platform: adc
+    id: temp_analog_reading
+    pin: A0
+
+status_led:
+  pin:
+    number: GPIO0
+    inverted: true
+
+output:
+  - platform: gpio
+    pin: GPIO4
+    id: shelly_25_relay_1
+  - platform: gpio
+    pin: GPIO15
+    id: shelly_25_relay_2
+
+light:
+  - platform: binary
+    name: '${devicename} Light'
+    output: shelly_25_relay_1
+    id: light
+
+fan:
+  - platform: binary
+    name: '${devicename} Fan'
+    output: shelly_25_relay_2
+    id: fan
 
 binary_sensor:
   - platform: gpio
     pin:
-      number: GPIO0
-      mode: INPUT_PULLUP
-      inverted: true
-    name: 'Sonoff S31 Button'
-    on_press:
-      - switch.toggle: relay
-  - platform: status
-    name: 'Sonoff S31 Status'
-
-sensor:
-  - platform: wifi_signal
-    name: 'Sonoff S31 WiFi Signal'
-    update_interval: 60s
-  - platform: cse7766
-    current:
-      name: 'Sonoff S31 Current'
-      accuracy_decimals: 2
-      filters:
-        - throttle_average: 60s
-    voltage:
-      name: 'Sonoff S31 Voltage'
-      accuracy_decimals: 2
-      filters:
-        - throttle_average: 60s
-    power:
-      name: 'Sonoff S31 Power'
-      accuracy_decimals: 2
-      id: my_power
-      filters:
-        - throttle_average: 60s
-    energy:
-      name: 'Sonoff S31 Energy'
-      accuracy_decimals: 2
-      filters:
-        - throttle: 60s
-    apparent_power:
-      name: 'Sonoff S31 Apparent Power'
-      filters:
-        - throttle_average: 60s
-    power_factor:
-      name: 'Sonoff S31 Power Factor'
-      accuracy_decimals: 2
-      filters:
-        - throttle_average: 60s
-
-  - platform: total_daily_energy
-    name: 'Sonoff S31 Daily Energy'
-    power_id: my_power
-    accuracy_decimals: 2
-
-switch:
+      number: GPIO13
+    name: '${devicename} Light Switch'
+    on_state:
+      then:
+        - light.toggle: light
+    internal: true
+    id: switchid1
   - platform: gpio
-    name: 'Sonoff S31 Relay'
-    pin: GPIO12
-    id: relay
-    restore_mode: ALWAYS_OFF
-
-time:
-  - platform: sntp
-    id: my_time
-
-status_led:
-  pin:
-    number: GPIO13
-    inverted: true
+    pin:
+      number: GPIO5
+    name: '${devicename} Fan Switch'
+    on_state:
+      then:
+        - fan.toggle: fan
+    internal: true
+    id: switchid2
