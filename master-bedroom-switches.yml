@@ -82,7 +82,7 @@ fan:
 binary_sensor:
   - platform: gpio
     pin:
-      number: GPIO13
+      number: GPIO5
     name: '${friendly_name} Light Switch'
     on_state:
       then:
@@ -91,7 +91,7 @@ binary_sensor:
     id: switch_1
   - platform: gpio
     pin:
-      number: GPIO5
+      number: GPIO13
     name: '${friendly_name} Fan Switch'
     on_state:
       then:
