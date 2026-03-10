@@ -1,0 +1,82 @@
+---
+esphome:
+  name: sprinkler-controller
+
+esp32:
+  variant: esp32
+  framework:
+    type: esp-idf
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+api:
+
+ota:
+  platform: esphome
+
+logger:
+  baud_rate: 0
+  logs:
+    sensor: DEBUG
+
+# Status LED
+status_led:
+  pin:
+    number: 23
+
+sprinkler:
+  - id: sprinkler_controller
+    main_switch: Sprinklers
+    auto_advance_switch: Sprinklers Auto Advance
+    reverse_switch: Sprinklers Reverse
+    multiplier_number: Sprinkler Multiplier
+    repeat_number: Sprinkler Repeat
+    valve_overlap: 5s
+    valves:
+      - valve_switch: Front Lawn
+        enable_switch: Enable Front Lawn
+        run_duration_number: Front Lawn Run Duration
+        valve_switch_id: relay_1
+
+switch:
+  - platform: gpio
+    pin: GPIO32
+    name: Relay 1
+    id: relay_1
+
+  - platform: gpio
+    pin: GPIO33
+    name: Relay 2
+    id: relay_2
+
+  - platform: gpio
+    pin: GPIO25
+    name: Relay 3
+    id: relay_3
+
+  - platform: gpio
+    pin: GPIO26
+    name: Relay 4
+    id: relay_4
+
+  - platform: gpio
+    pin: GPIO27
+    name: Relay 5
+    id: relay_5
+
+  - platform: gpio
+    pin: GPIO14
+    name: Relay 6
+    id: relay_6
+
+  - platform: gpio
+    pin: GPIO12
+    name: Relay 7
+    id: relay_7
+
+  - platform: gpio
+    pin: GPIO13
+    name: Relay 8
+    id: relay_8

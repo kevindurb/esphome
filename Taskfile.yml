@@ -11,6 +11,7 @@ vars:
     - livingroom-lamp
     - master-bedroom-switches
     - washing-machine-outlet
+    - sprinkler-controller
 
 tasks:
   default:
