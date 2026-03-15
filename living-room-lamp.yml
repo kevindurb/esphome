@@ -1,9 +1,9 @@
 ---
 substitutions:
-  name: kitchen-lamp
-  friendly_name: Kitchen Lamp
-  area: Kitchen
-  static_ip: 192.168.137.4
+  name: living-Room-lamp
+  friendly_name: Living Room Lamp
+  area: Living Room
+  static_ip: 192.168.137.5
 
 packages:
   - !include common/base.yml
