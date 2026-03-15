@@ -15,8 +15,8 @@ output:
     pin: GPIO4
     id: shelly_1_relay
 
-switch:
-  - platform: output
+light:
+  - platform: binary
     name: Office Lights
     output: shelly_1_relay
     id: office_lights

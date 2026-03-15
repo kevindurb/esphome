@@ -9,8 +9,3 @@ packages:
   - !include common/base.yml
   - !include common/wifi.yml
   - !include common/sonoff-s31.yml
-
-light:
-  - platform: binary
-    name: '${friendly_name}'
-    output: relay

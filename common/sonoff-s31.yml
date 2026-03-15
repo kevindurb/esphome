@@ -16,7 +16,7 @@ binary_sensor:
       inverted: true
     name: '${friendly_name} Button'
     on_press:
-      - output.toggle: relay
+      - light.toggle: light_1
   - platform: status
     name: '${friendly_name} Status'
 
@@ -63,14 +63,18 @@ sensor:
 
 output:
   - platform: gpio
-    name: '${friendly_name} Relay'
     pin: GPIO12
     id: relay
-    restore_mode: ALWAYS_OFF
+
+light:
+  - platform: binary
+    name: '${friendly_name}'
+    id: light_1
+    output: relay
 
 time:
   - platform: sntp
-    id: time
+    id: time_1
 
 status_led:
   pin:
