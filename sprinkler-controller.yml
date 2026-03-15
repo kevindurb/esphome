@@ -10,9 +10,6 @@ packages:
   - !include common/wifi.yml
   - !include common/time.yml
 
-wifi:
-  use_address: 192.168.0.118
-
 esp32:
   variant: esp32
   framework:
