@@ -4,6 +4,7 @@ secrets.yaml
 README.md
 .esphome
 .git
+.github
 .gitignore
 Containerfile
 .containerignore
