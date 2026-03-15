@@ -35,10 +35,22 @@ sprinkler:
     repeat_number: Sprinkler Repeat
     valve_overlap: 5s
     valves:
-      - valve_switch: Front Lawn
-        enable_switch: Enable Front Lawn
-        run_duration_number: Front Lawn Run Duration
+      - valve_switch: Valve 1
+        enable_switch: Enable Valve 1
+        run_duration_number: Valve 1 Run Duration
         valve_switch_id: relay_1
+      - valve_switch: Valve 2
+        enable_switch: Enable Valve 2
+        run_duration_number: Valve 2 Run Duration
+        valve_switch_id: relay_2
+      - valve_switch: Valve 3
+        enable_switch: Enable Valve 3
+        run_duration_number: Valve 3 Run Duration
+        valve_switch_id: relay_3
+      - valve_switch: Valve 4
+        enable_switch: Enable Valve 4
+        run_duration_number: Valve 4 Run Duration
+        valve_switch_id: relay_4
 
 switch:
   - platform: gpio
