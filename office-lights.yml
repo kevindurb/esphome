@@ -1,0 +1,22 @@
+---
+substitutions:
+  name: office-lights
+  friendly_name: Office Lights
+  area: Office
+  static_ip: 192.168.137.3
+
+packages:
+  - !include common/base.yml
+  - !include common/wifi.yml
+  - !include common/shelly.yml
+
+output:
+  - platform: gpio
+    pin: GPIO4
+    id: shelly_1_relay
+
+switch:
+  - platform: output
+    name: Office Lights
+    output: shelly_1_relay
+    id: office_lights
