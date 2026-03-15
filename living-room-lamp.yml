@@ -9,3 +9,4 @@ packages:
   - !include common/base.yml
   - !include common/wifi.yml
   - !include common/sonoff-s31.yml
+  - !include common/time.yml

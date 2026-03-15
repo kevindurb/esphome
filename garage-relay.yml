@@ -9,6 +9,7 @@ packages:
   - !include common/base.yml
   - !include common/wifi.yml
   - !include common/shelly.yml
+  - !include common/time.yml
 
 output:
   - platform: gpio

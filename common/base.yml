@@ -6,6 +6,7 @@ esphome:
 api:
 ota:
   platform: esphome
+  password: !secret ota_password
 logger:
   baud_rate: 0
   logs:

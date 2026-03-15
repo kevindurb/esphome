@@ -72,10 +72,6 @@ light:
     id: light_1
     output: relay
 
-time:
-  - platform: sntp
-    id: time_1
-
 status_led:
   pin:
     number: GPIO13
