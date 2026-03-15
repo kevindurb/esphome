@@ -1,0 +1,9 @@
+dist
+justfile
+secrets.yaml
+README.md
+.esphome
+.git
+.gitignore
+Containerfile
+.containerignore
