@@ -2,7 +2,7 @@
 substitutions:
   name: sprinkler-controller
   friendly_name: Sprinkler Controller
-  area: Laundry Room
+  area: Backyard
   static_ip: 192.168.137.6
 
 packages:
