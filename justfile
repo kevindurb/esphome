@@ -7,10 +7,10 @@ all:
   exit 1
 
 run target:
-  esphome run "./{{target}}.yml"
+  brew bundle exec esphome run "./{{target}}.yml"
 
 compile target:
-  esphome compile "./{{target}}.yml"
+  brew bundle exec esphome compile "./{{target}}.yml"
 
 compress target: (compile target)
   gzip -fk ".esphome/build/{{target}}/.pioenvs/{{target}}/firmware.bin"
