@@ -28,22 +28,35 @@ sprinkler:
     repeat_number: Repeat
     valve_overlap: 5s
     valves:
-      - valve_switch: Valve 1
-        enable_switch: Enable Valve 1
-        run_duration_number: Valve 1 Run Duration
+      - valve_switch: North Side
+        enable_switch: Enable North Side
+        run_duration_number: North Side Run Duration
         valve_switch_id: relay_1
-      - valve_switch: Valve 2
-        enable_switch: Enable Valve 2
-        run_duration_number: Valve 2 Run Duration
+
+      - valve_switch: Front
+        enable_switch: Enable Front
+        run_duration_number: Front Run Duration
         valve_switch_id: relay_2
-      - valve_switch: Valve 3
-        enable_switch: Enable Valve 3
-        run_duration_number: Valve 3 Run Duration
-        valve_switch_id: relay_3
-      - valve_switch: Valve 4
-        enable_switch: Enable Valve 4
-        run_duration_number: Valve 4 Run Duration
+
+      - valve_switch: Backyard North
+        enable_switch: Enable Backyard North
+        run_duration_number: Backyard North Run Duration
         valve_switch_id: relay_4
+
+      - valve_switch: Backyard South
+        enable_switch: Enable Backyard South
+        run_duration_number: Backyard South Run Duration
+        valve_switch_id: relay_5
+
+      - valve_switch: Backyard Sitting Area
+        enable_switch: Enable Backyard Sitting Area
+        run_duration_number: Backyard Sitting Area Run Duration
+        valve_switch_id: relay_6
+
+      - valve_switch: Backyard South Tree
+        enable_switch: Enable Backyard South Tree
+        run_duration_number: Backyard South Tree Run Duration
+        valve_switch_id: relay_7
 
 switch:
   - platform: gpio
@@ -55,11 +68,6 @@ switch:
     pin: GPIO33
     name: Relay 2
     id: relay_2
-
-  - platform: gpio
-    pin: GPIO25
-    name: Relay 3
-    id: relay_3
 
   - platform: gpio
     pin: GPIO26
@@ -80,8 +88,3 @@ switch:
     pin: GPIO12
     name: Relay 7
     id: relay_7
-
-  - platform: gpio
-    pin: GPIO13
-    name: Relay 8
-    id: relay_8
