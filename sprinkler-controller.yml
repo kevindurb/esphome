@@ -63,28 +63,34 @@ switch:
     pin: GPIO32
     name: Relay 1
     id: relay_1
+    internal: true
 
   - platform: gpio
     pin: GPIO33
     name: Relay 2
     id: relay_2
+    internal: true
 
   - platform: gpio
     pin: GPIO26
     name: Relay 4
     id: relay_4
+    internal: true
 
   - platform: gpio
     pin: GPIO27
     name: Relay 5
     id: relay_5
+    internal: true
 
   - platform: gpio
     pin: GPIO14
     name: Relay 6
     id: relay_6
+    internal: true
 
   - platform: gpio
     pin: GPIO12
     name: Relay 7
     id: relay_7
+    internal: true
