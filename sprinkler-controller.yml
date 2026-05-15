@@ -43,19 +43,19 @@ sprinkler:
         run_duration_number: Backyard North Run Duration
         valve_switch_id: relay_4
 
+      - valve_switch: Backyard South Tree
+        enable_switch: Enable Backyard South Tree
+        run_duration_number: Backyard South Tree Run Duration
+        valve_switch_id: relay_5
+
       - valve_switch: Backyard South
         enable_switch: Enable Backyard South
         run_duration_number: Backyard South Run Duration
-        valve_switch_id: relay_5
+        valve_switch_id: relay_6
 
       - valve_switch: Backyard Sitting Area
         enable_switch: Enable Backyard Sitting Area
         run_duration_number: Backyard Sitting Area Run Duration
-        valve_switch_id: relay_6
-
-      - valve_switch: Backyard South Tree
-        enable_switch: Enable Backyard South Tree
-        run_duration_number: Backyard South Tree Run Duration
         valve_switch_id: relay_7
 
 switch:
